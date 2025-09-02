@@ -220,5 +220,16 @@ lynis audit system
 ## 1.11 Reflexionsfragen
 
 - Welche Dienste waren unnötig offen?
+ Nach Härtung war nur Port 22 offen. Bewiesen durch ss -tuln.
 - Welche Konfiguration war besonders sicherheitsrelevant?
-- Wie unterscheidet sich ein gehärteter Container von einem „Vanilla“-Image?
+ Aktivierung der Root-Login-Blockierung mit PermitRootLogin no
+Erstellung eines nicht-root Benutzers mit sudo-Rechten
+Aktivierung der Firewall (UFW) mit nur SSH-Freigabe
+Deaktivierung von IPv6, um zusätzliche Angriffsflächen zu vermeiden (hat jedoch nicht funktioniert)
+Entfernung unnötiger Software, um die Angriffsfläche zu minimieren
+- Wie unterscheidet sich ein gehärteter Container von einem „Vanilla“-Image?.
+| Aspekt            | Vanilla-Image                               | Gehärteter Container                                                                    |
+| ----------------- | ------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Dienste/Ports     | Standarddienste aktiv; teils unnötige Ports | Nur benötigte Dienste; unnötige Ports geschlossen (Default-Deny/enge Firewall-Regeln)   |
+| Benutzer & Rechte | Läuft oft als `root`; viele Capabilities    | Nicht-root-User; `--cap-drop=ALL` + nur nötige Caps; `--security-opt no-new-privileges` |
+| Software/FS       | Viele Pakete; schreibbares Root-FS          | Minimal-Pakete; `--read-only` + `--tmpfs`; regelmäßige Updates/Patches                  |
