@@ -1,0 +1,24 @@
+services:
+  metasploitable:
+    image: tleemcjr/metasploitable2
+    container_name: metasploitable2
+    hostname: victim
+    ports:
+      - 80:80 # open port 80 to be able to access vulnerable web applications (localhost:80 in Host-Browser)
+    networks:
+      - pentest_network
+    tty: true # necessary to open a bash with "docker exec -it metasploitable2 /bin/bash"
+    stdin_open: true
+
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: kalibox
+    hostname: attacker
+    networks:
+      - pentest_network
+    tty: true # necessary to open a bash with "docker exec -it kalibox /bin/bash"
+    stdin_open: true
+
+networks:
+  pentest_network: # define own bridge network (isolated from default network)
+    driver: bridge
