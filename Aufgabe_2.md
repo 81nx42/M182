@@ -159,20 +159,17 @@ Nachdem Sie nun diverse Schwachstellen im Netzwerk gefunden haben, wollen sie he
 
 Experimentieren sie selbst ein wenig: https://docs.rapid7.com/metasploit/metasploitable-2-exploitability-guide
 
-### 2.5.1 Unix Basics
+### 2.5.1 
 
-Wir schauen uns nun NFS (Network File System) an.Es kann durch das abfragen von Port 2049 vom Portmapper identifiziert werden. 
+Auf schlecht gesicherten Systemen ist er oft mit Standard-Logins wie tomcat:tomcat oder schwachen Passwörtern erreichbar. Ein Angreifer kann zunächst mit Bruteforce-Angriffen oder durch das Testen von Default-Credentials Zugang erlangen. Nach erfolgreicher Authentifizierung kann über das Manager-Interface eine bösartige WAR-Datei hochgeladen werden. Diese wird vom Tomcat-Server ausgeführt und öffnet dem Angreifer eine Remote-Shell, wodurch vollständiger Zugriff auf das Zielsystem möglich wird.
 
-```bash
-sudo apt install rpcbind nfs-common -y
-```
-danach:
-```bash
-rpcinfo -p 172.18.0.3
-```
-Output:
-![alt text](image-5.png)
+- Service: Apache Tomcat 6/7 (läuft auf Metasploitable2 auf Port 8180)
 
+- Schwachstelle: Default-Credentials (tomcat:tomcat, admin:admin) oder schwache Passwörter → Zugriff auf das Tomcat Manager Interface.
+
+- Exploit: (exploit/multi/http/tomcat_mgr_upload) Kann eine WAR-Datei hochgeladen und eine Remote-Shell geöffnet werden.
+
+Quelle: Metasploit Module Doku – Tomcat Manager
 ### 2.5.2 vsftpd Backdoor Exploit
 
 - Service: vsftpd 2.3.4 (läuft standardmäßig auf Metasploitable2 auf Port 21)
@@ -181,7 +178,7 @@ Output:
 
 quelle:https://docs.rapid7.com/metasploit/metasploitable-2-exploitability-guide#vsftpd
 
-### 3 Angriff
+## 3 Angriff
 
 Eckdaten:
 - vsftpd 2.3.4 Backdoor
@@ -190,7 +187,7 @@ Eckdaten:
 
 - Exploit: exploit/unix/ftp/vsftpd_234_backdoor
 
-## 3.1 Durchführung des Angriffs
+### 3.1 Durchführung des Angriffs
 zuerst Metasploit starten:
 
 ```bash
