@@ -40,9 +40,22 @@ Ausnahme: Docker, kann ich in der GUI aktualisieren.
 Mit winget kann ich die Updates von Windows herunterladen und installieren.
 
 ```bash
-
+winget ugrade Python.Python.3.12
+winget upgrade 7zip.7zip
+winget upgrade oracle.virtualbox
+winget upgrade wireguard.wireguard
 ```
 Danach sieht es so aus:
 ![alt text](image-4.png)
 
 Bei WireGuard hat es erstaunlicherweise keine Updates gegeben. 
+
+### Hardening
+
+Zur Härtung des Systems habe ich in erster Linie alle installierten Pakete und Programme auf den neuesten Stand gebracht. Durch das Einspielen von Updates und Sicherheits-Patches wurden bekannte Schwachstellen geschlossen und die Angriffsfläche des Systems reduziert. Dies betraf sowohl das Betriebssystem als auch zusätzliche Anwendungen wie VirtualBox, Docker Desktop oder Hilfsprogramme wie 7-Zip.
+
+---
+
+### Fazit
+
+Mein Fazit zu Wazuh ist, dass es ein hilfreiches Werkzeug für die Überwachung und Analyse von Endpunkten ist. Besonders nützlich war für mich die Funktion zur Erkennung von Schwachstellen, da ich dadurch sofort sehen konnte, welche Software-Versionen ein Sicherheitsrisiko darstellen. Gelernt habe ich vor allem, wie wichtig es ist, Systeme regelmäßig aktuell zu halten und wie Wazuh dabei unterstützt, diese Prozesse transparent zu machen. Auch wenn die Einrichtung der Agents anfangs etwas aufwendig war, zeigt das Tool sehr gut, wo Handlungsbedarf besteht und trägt damit direkt zur Härtung der Systeme bei.
