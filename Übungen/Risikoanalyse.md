@@ -25,3 +25,14 @@ Analysieren Sie für jedes der folgenden Systeme potenzielle Risiken. Füllen Si
 | Webserver (Onlineshop) | Sicherheitslücken für angriffe wie: SQL-Injection oder DDoS | Alte Software-Versionen kein Patch-Management | häufig | kritisch | C, I, A | kritisch |
 | Datenbankserver (Kundendaten) | Datenextraktion durch internen oder externen Angreifer | Schlechte Verschlüsselung, Falsch Konfigurierte Zugriffsrechte, unsichere Passwörter | gelegentlich | hoch | C, I | hoch |
 | Notebook (Support-Mitarbeiter, mobil) | Verlust oder Diebstahl heisst: unbefugter Zugriff ins Unternehmensnetz | Keine Festplattenverschlüsselung, schwache Passwortrichtlinien | gelegentlich | hoch | C, I, A | hoch |
+
+### Aufgabe 2: Massnahmendefinition
+
+Für zwei Risiken mit hoher oder kritischer Bewertung sollen Sie jeweils geeignete Massnahmen vorschlagen, um das Risiko zu reduzieren. Tragen Sie diese in folgende Tabelle ein:
+
+| System | Identifiziertes Risiko | Schutzmassnahme | Erwartete Wirkung |
+| ------ | ---------------------- | --------------- | ----------------- |
+| Webserver (Onlineshop) | SQL-Injection, DDoS | - Regelmässige Patch Windows  und Updates<br>- Web Application Firewall (WAF)<br>- Penetrationstests durchführen (Evtl von Externen Testern) | Reduziert Eintrittswahrscheinlichkeit durch Patches und Schweregrad mit dem Pentesting zum Vorbäugen |
+| Notebook (Support-Mitarbeiter) | Verlust oder Diebstahl gibt unbefugter Zugriff and dritt Personen | - Vollständige Festplattenverschlüsselung wie BitLocker <br>- Multi-Faktor-Authentifizierung für VPN<br>- Mobile Device Management (Remote-Löschung) | Reduziert Schweregrad gestohlene Geräte enthalten nun keine nutzbaren Daten und Eintrittswahrscheinlichkeit mit MFA erschwert Zugriff|
+
+
